@@ -28,6 +28,8 @@ header {
 }
 
 header h1 { font-size: 2.8rem; margin-bottom: 10px; letter-spacing: -1px; }
+header h1 i { color: var(--secondary-color); margin-right: 15px; } /* Icône header */
+
 .intro { font-size: 1.1rem; opacity: 0.9; max-width: 800px; }
 
 h2 { 
@@ -37,7 +39,7 @@ h2 {
     display: flex; 
     align-items: center; 
 }
-h2::before { content: "›"; margin-right: 10px; color: var(--secondary-color); font-size: 2.5rem; }
+h2 i { margin-right: 15px; color: var(--secondary-color); font-size: 1.5rem; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
 
@@ -48,7 +50,8 @@ h2::before { content: "›"; margin-right: 10px; color: var(--secondary-color); 
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-.card h3 { color: var(--secondary-color); margin-bottom: 10px; font-size: 1.2rem; }
+.card h3 { color: var(--secondary-color); margin-bottom: 10px; font-size: 1.2rem; display: flex; align-items: center; }
+.card h3 i { margin-right: 10px; font-size: 1rem; }
 
 pre {
     background: var(--code-bg);
@@ -95,6 +98,7 @@ footer {
     color: #747d8c;
     margin-top: 50px;
 }
+footer i { margin-right: 8px; color: var(--primary-color); }
 
 @media (max-width: 768px) {
     header h1 { font-size: 1.8rem; }
