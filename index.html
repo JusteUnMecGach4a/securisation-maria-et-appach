@@ -3,133 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapport Final : Sécurisation LAMP</title>
+    <title>Audit Technique : Sécurisation LAMP</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
         <div class="container">
-            <span class="author">Léo Canova-Prevot</span>
-            <h1>Rapport Final : Checklist de Sécurisation LAMP</h1>
-            <p class="intro">Synthèse complète de l'audit et du durcissement effectués sur le serveur.</p>
+            <span class="author">Expertise Sécurité : Léo Canova-Prevot</span>
+            <h1>Rapport de Durcissement (Hardening) LAMP</h1>
+            <p class="intro">Documentation technique des tests de conformité et des mesures correctives appliquées sur l'infrastructure Debian/LMDE.</p>
         </div>
     </header>
 
     <main class="container">
         
-        <!-- Section 1 : Initialisation -->
-        <section id="initialisation">
-            <h2>1. Démarche à suivre (Initialisation)</h2>
-            <p>Préparation de la machine et vérification des versions avant les tests.</p>
-            
-            <div class="card">
-                <h3>Étape 1 : Mettre à jour la machine (Debian/LMDE)</h3>
-                <pre><code>sudo apt update && sudo apt upgrade</code></pre>
-            </div>
-
-            <div class="card">
-                <h3>Étape 2 : Vérifier les versions installées</h3>
-                <pre><code>apache2 -v
-mariadb --version</code></pre>
-                <ul class="version-results">
-                    <li><strong>Apache :</strong> 2.4.66 (Debian) — 05/12/2025</li>
-                    <li><strong>MariaDB :</strong> 10.11.14-MariaDB — Distrib 15.1</li>
-                </ul>
+        <!-- Section 1 : État des Lieux -->
+        <section>
+            <h2>1. Initialisation et Versions</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Environnement Système</h3>
+                    <p>Mise à jour des index de dépôts et synchronisation des paquets critiques.</p>
+                    <pre><code>sudo apt update && sudo apt list --upgradable</code></pre>
+                </div>
+                <div class="card">
+                    <h3>Empreintes Logicielles</h3>
+                    <ul class="version-list">
+                        <li><strong>Apache HTTPD :</strong> v2.4.66 <small>(Signature masquée)</small></li>
+                        <li><strong>MariaDB Server :</strong> v10.11.14 <small>(Instance isolée)</small></li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <!-- Section 2 : Tableau de Bord (Sans la colonne Résultat Obtenu) -->
+        <!-- Section 2 : Tableau de Bord Ultra-Précis -->
         <section id="dashboard">
-            <h2>2. Tableau de Bord de Sécurisation</h2>
+            <h2>2. Matrice de Sécurisation Avancée</h2>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Élément de sécurité</th>
-                            <th>Commande de Test</th>
-                            <th>Résultat Attendu</th>
-                            <th>Remédiation Appliquée (Solution)</th>
+                            <th>Vecteur de Sécurité</th>
+                            <th>Commande de Vérification (CLI)</th>
+                            <th>Résultat Attendu & Critères d'Acceptation</th>
+                            <th>Remédiation Appliquée</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Ligne 1 -->
                         <tr>
                             <td><strong>Mise à jour Système</strong></td>
-                            <td><code>sudo apt update && sudo apt upgrade</code></td>
-                            <td>Système à jour</td>
-                            <td>Actualisation des dépôts et des paquets Debian/LMDE.</td>
+                            <td><code>apt-get upgrade --dry-run | grep "^Inst" | wc -l</code></td>
+                            <td>Le compteur doit retourner <strong>0</strong>. Aucun paquet de sécurité en attente.</td>
+                            <td>Patch management global via APT sur dépôts officiels Debian.</td>
                         </tr>
+                        <!-- Ligne 2 -->
                         <tr>
-                            <td><strong>Bannière Apache</strong></td>
-                            <td><code>curl -I http://localhost</code></td>
-                            <td>Server: Apache (sans version)</td>
-                            <td>Modifié security.conf (ServerTokens Prod, ServerSignature Off).</td>
+                            <td><strong>Exposition de Bannière</strong></td>
+                            <td><code>curl -I http://localhost | grep -i "Server"</code></td>
+                            <td>Doit afficher uniquement <code>Server: Apache</code>. Aucune version (ex: 2.4) ni OS (ex: Debian) visible.</td>
+                            <td>Restriction via <code>ServerTokens Prod</code> et <code>ServerSignature Off</code>.</td>
                         </tr>
+                        <!-- Ligne 3 -->
                         <tr>
-                            <td><strong>Listage Répertoire</strong></td>
-                            <td>Accès http://localhost/</td>
-                            <td>403 Forbidden</td>
-                            <td>Supprimé Indexes dans apache2.conf pour /var/www/.</td>
+                            <td><strong>Indexation de Répertoire</strong></td>
+                            <td><code>curl -s -o /dev/null -w "%{http_code}" http://localhost/icons/</code></td>
+                            <td>Retour du code HTTP <strong>403 (Forbidden)</strong>. L'exploration de l'arborescence est interdite.</td>
+                            <td>Désactivation globale de l'option <code>Indexes</code> dans <code>apache2.conf</code>.</td>
                         </tr>
+                        <!-- Ligne 4 -->
                         <tr>
-                            <td><strong>Forçage HTTPS</strong></td>
-                            <td><code>curl -I http://localhost</code></td>
-                            <td>301 Moved Permanently</td>
-                            <td>Ajouté Redirect permanent dans 000-default.conf.</td>
+                            <td><strong>Politique HSTS / HTTPS</strong></td>
+                            <td><code>curl -sI http://localhost | grep -E "301|Location"</code></td>
+                            <td>Code <strong>301 Moved Permanently</strong> pointant impérativement vers <code>https://...</code>.</td>
+                            <td>Directive <code>Redirect permanent /</code> configurée sur le VirtualHost port 80.</td>
                         </tr>
+                        <!-- Ligne 5 -->
                         <tr>
-                            <td><strong>Service HTTPS</strong></td>
-                            <td><code>ss -tunlp | grep 443</code></td>
-                            <td>Écoute sur le port 443</td>
-                            <td>a2enmod ssl + a2ensite default-ssl. Installation de ssl-cert.</td>
+                            <td><strong>Disponibilité SSL/TLS</strong></td>
+                            <td><code>ss -tuln | grep :443 && openssl s_client -connect localhost:443</code></td>
+                            <td>Port 443 en état <strong>LISTEN</strong>. Handshake SSL réussi avec certificat valide.</td>
+                            <td>Activation du module <code>mod_ssl</code> et configuration du bundle de certificats.</td>
                         </tr>
+                        <!-- Ligne 6 -->
                         <tr>
-                            <td><strong>Isolation MariaDB</strong></td>
-                            <td><code>ss -tunlp | grep 3306</code></td>
-                            <td>127.0.0.1:3306</td>
-                            <td>Modifié bind-address = 127.0.0.1 dans 50-server.cnf.</td>
+                            <td><strong>Isolation Réseau SQL</strong></td>
+                            <td><code>netstat -tpln | grep 3306</code></td>
+                            <td>L'adresse d'écoute doit être <strong>127.0.0.1:3306</strong>. Aucune écoute sur 0.0.0.0 (public).</td>
+                            <td>Restriction de la variable <code>bind-address</code> dans la config MariaDB.</td>
                         </tr>
+                        <!-- Ligne 7 -->
                         <tr>
-                            <td><strong>Accès Root SQL</strong></td>
-                            <td><code>mariadb -u root</code></td>
-                            <td>Access denied (sans sudo)</td>
-                            <td>Sécurisation via mysql_secure_installation et plugin unix_socket.</td>
+                            <td><strong>Authentification Root SQL</strong></td>
+                            <td><code>mariadb -u root -p'false_pwd'</code></td>
+                            <td>Message : <strong>Access denied</strong>. L'accès root doit être lié au socket UNIX (sudo uniquement).</td>
+                            <td>Déploiement du plugin <code>unix_socket</code> et suppression des accès distants.</td>
                         </tr>
+                        <!-- Ligne 8 -->
                         <tr>
-                            <td><strong>Gestion Privilèges</strong></td>
-                            <td><code>SHOW GRANTS FOR 'admin_web'</code></td>
-                            <td>Error 1141 (Inexistant)</td>
-                            <td>Suppression du compte trop privilégié via DROP USER.</td>
+                            <td><strong>Moindre Privilège</strong></td>
+                            <td><code>mariadb -e "SELECT User FROM mysql.user WHERE User='admin_web';"</code></td>
+                            <td>Retour <strong>vide (Empty set)</strong>. Le compte n'existe plus dans la base d'utilisateurs.</td>
+                            <td>Suppression via <code>DROP USER 'admin_web'@'localhost'</code> après audit des droits.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Section 3 : Commandes -->
-        <section id="gestion">
-            <h2>3. Rappel des commandes de gestion</h2>
+        <!-- Section 3 : Maintenance -->
+        <section>
+            <h2>3. Commandes de Maintenance Critique</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Redémarrage</h3>
-                    <ul>
-                        <li><strong>Apache :</strong> <code>sudo systemctl restart apache2</code></li>
-                        <li><strong>MariaDB :</strong> <code>sudo systemctl restart mariadb</code></li>
-                    </ul>
+                    <h3>Cycle de Vie des Services</h3>
+                    <p>Redémarrage sécurisé après modification de configuration :</p>
+                    <pre><code>sudo systemctl restart apache2 mariadb</code></pre>
                 </div>
                 <div class="card">
-                    <h3>Vérification</h3>
-                    <ul>
-                        <li><strong>Syntaxe :</strong> <code>sudo apache2ctl configtest</code></li>
-                        <li><strong>Logs :</strong> <code>sudo tail -n 20 /var/log/apache2/error.log</code></li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Administration</h3>
-                    <ul>
-                        <li><strong>MariaDB :</strong> <code>sudo mariadb</code></li>
-                    </ul>
+                    <h3>Analyse de Santé</h3>
+                    <p>Vérification d'intégrité et logs temps réel :</p>
+                    <pre><code>apache2ctl configtest
+tail -f /var/log/apache2/error.log</code></pre>
                 </div>
             </div>
         </section>
@@ -138,7 +135,7 @@ mariadb --version</code></pre>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 - Rapport de Sécurisation LAMP - Léo Canova-Prevot</p>
+            <p>Document Technique - Dernière révision : Décembre 2025 - <strong>Confidentialité : Niveau 2</strong></p>
         </div>
     </footer>
 
