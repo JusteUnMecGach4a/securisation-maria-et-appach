@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit Technique : Sécurisation LAMP</title>
+    
+    <!-- Icône de l'onglet (Favicon) : Un bouclier bleu en SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    
     <link rel="stylesheet" href="style.css">
+    <!-- Import Font Awesome pour les icônes de la page -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
         <div class="container">
-            <h1>Rapport de Durcissement (Hardening) LAMP</h1>
+            <h1><i class="fa-solid fa-shield-halved"></i> Rapport de Durcissement (Hardening) LAMP</h1>
             <p class="intro">Documentation technique des tests de conformité et des mesures correctives appliquées sur l'infrastructure Debian/LMDE.</p>
         </div>
     </header>
@@ -20,15 +26,15 @@
         
         <!-- Section 1 : État des Lieux -->
         <section>
-            <h2>1. Initialisation et Versions</h2>
+            <h2><i class="fa-solid fa-circle-info"></i> 1. Initialisation et Versions</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Environnement Système</h3>
+                    <h3><i class="fa-solid fa-sync"></i> Environnement Système</h3>
                     <p>Mise à jour des index de dépôts et synchronisation des paquets critiques.</p>
                     <pre><code>sudo apt update && sudo apt list --upgradable</code></pre>
                 </div>
                 <div class="card">
-                    <h3>Empreintes Logicielles</h3>
+                    <h3><i class="fa-solid fa-microchip"></i> Empreintes Logicielles</h3>
                     <ul class="version-list">
                         <li><strong>Apache HTTPD :</strong> v2.4.66 <small>(Signature masquée)</small></li>
                         <li><strong>MariaDB Server :</strong> v10.11.14 <small>(Instance isolée)</small></li>
@@ -39,7 +45,7 @@
 
         <!-- Section 2 : Tableau de Bord -->
         <section id="dashboard">
-            <h2>2. Matrice de Sécurisation Avancée</h2>
+            <h2><i class="fa-solid fa-list-check"></i> 2. Matrice de Sécurisation Avancée</h2>
             <div class="table-container">
                 <table>
                     <thead>
@@ -106,15 +112,15 @@
 
         <!-- Section 3 : Maintenance -->
         <section>
-            <h2>3. Commandes de Maintenance Critique</h2>
+            <h2><i class="fa-solid fa-gears"></i> 3. Commandes de Maintenance Critique</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Cycle de Vie des Services</h3>
+                    <h3><i class="fa-solid fa-terminal"></i> Cycle de Vie des Services</h3>
                     <p>Redémarrage sécurisé des démons :</p>
                     <pre><code>sudo systemctl restart apache2 mariadb</code></pre>
                 </div>
                 <div class="card">
-                    <h3>Analyse de Santé</h3>
+                    <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Analyse de Santé</h3>
                     <p>Vérification d'intégrité et logs :</p>
                     <pre><code>apache2ctl configtest
 tail -f /var/log/apache2/error.log</code></pre>
@@ -125,7 +131,7 @@ tail -f /var/log/apache2/error.log</code></pre>
 
     <footer>
         <div class="container">
-            <p>Rapport Technique de Sécurisation - 2025 - <strong>Confidentialité : Niveau 2</strong></p>
+            <p><i class="fa-solid fa-lock"></i> Rapport Technique de Sécurisation - 2025 - <strong>Confidentialité : Niveau 2</strong></p>
         </div>
     </footer>
 
