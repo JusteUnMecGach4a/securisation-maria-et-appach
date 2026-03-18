@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #0a3d62; /* Bleu nuit plus profond */
-    --secondary-color: #38ada9; /* Turquoise technique */
-    --accent-color: #fa983a; /* Orange pour les points d'attention */
+    --primary-color: #0a3d62;
+    --secondary-color: #38ada9;
+    --accent-color: #fa983a;
     --bg-color: #f1f2f6;
     --card-bg: #ffffff;
     --text-color: #2f3542;
@@ -27,17 +27,7 @@ header {
     margin-bottom: 40px;
 }
 
-header h1 { font-size: 2.8rem; margin: 15px 0; letter-spacing: -1px; }
-
-.author { 
-    text-transform: uppercase; 
-    font-size: 0.8rem; 
-    font-weight: 700; 
-    background: var(--secondary-color); 
-    padding: 5px 15px; 
-    border-radius: 4px;
-}
-
+header h1 { font-size: 2.8rem; margin-bottom: 10px; letter-spacing: -1px; }
 .intro { font-size: 1.1rem; opacity: 0.9; max-width: 800px; }
 
 h2 { 
@@ -60,7 +50,6 @@ h2::before { content: "›"; margin-right: 10px; color: var(--secondary-color); 
 
 .card h3 { color: var(--secondary-color); margin-bottom: 10px; font-size: 1.2rem; }
 
-/* Styles Code */
 pre {
     background: var(--code-bg);
     color: #82ccdd;
@@ -73,14 +62,10 @@ pre {
     margin: 15px 0;
 }
 
-code { font-family: 'Fira Code', monospace; font-weight: 500; }
-td code { background: #f1f2f6; padding: 3px 6px; border-radius: 4px; color: #eb4d4b; font-size: 0.8rem; }
-
-/* Tableau Technique */
 .table-container { 
     background: white; 
     border-radius: 12px; 
-    overflow: hidden; 
+    overflow-x: auto; 
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     margin-bottom: 50px;
 }
@@ -98,9 +83,10 @@ th {
 
 td { padding: 20px; border-bottom: 1px solid #f1f2f6; font-size: 0.9rem; vertical-align: top; }
 td strong { color: var(--primary-color); display: block; margin-bottom: 5px; }
+td b { color: var(--accent-color); font-weight: bold; }
 
-/* Pour mettre en évidence les codes HTTP dans le texte */
-td b { color: var(--accent-color); font-family: 'Fira Code', monospace; }
+.version-list { list-style: none; }
+.version-list li { padding: 8px 0; border-bottom: 1px solid #eee; }
 
 footer { 
     background: #dfe4ea; 
@@ -112,5 +98,4 @@ footer {
 
 @media (max-width: 768px) {
     header h1 { font-size: 1.8rem; }
-    .grid { grid-template-columns: 1fr; }
 }
